@@ -1,0 +1,109 @@
+
+PROBLEM STATEMENT JAVA JDBC
+Problem 4 :Explanation:
+•	WHERE: Filters claims that have an "Approved" status and a claimAmount greater than $5,000.
+•	GROUP BY: Groups the results by policyNumber.
+•	SUM: Calculates the total claim amount for each policy.
+•	AVG: Calculates the average claim amount for each policy.
+•	ORDER BY: Sorts the results in descending order by totalClaimAmount.
+•	LIMIT 3: Fetches the top 3 policies with the highest total claim amounts.
+
+Explanation of Java Code:
+1.	JDBC Setup: The JDBC URL,
+2.	 username, and password are set to connect to the database.
+3.	SQL Query Execution: The Statement object is used to execute the SQL query.
+4.	ResultSet: We use a ResultSet to retrieve the result of the query.
+5.	Loop Through Results: The while (rs.next()) loop iterates through the rows of the result set and prints the policy number, total claim amount, and average claim amount for each of the top 3 policies.
+Assumptions:
+•	The Claims table exists in the database with the relevant columns (claimId, policyNumber, claimAmount, claimDate, status).
+•	The database is MySQL (but the SQL syntax can be adjusted for other RDBMS).
+•	You are familiar with setting up JDBC and have access to a JDBC driver for your database.
+PROBLEM 5:
+Explanation of SQL Query:
+•	WHERE: Filters for policyholders with a policyType of "Life" and age greater than 60.
+•	Calculation: premiumAmount / age is computed as riskScore.
+•	CASE: Categorizes riskScore values above 0.5 as "High Risk"; otherwise, as "Low Risk."
+•	ORDER BY: Sorts the results by riskScore in descending order.
+Explanation of Java Code:
+1.	RiskAssessment Class: Defines a class to store holderId, name, riskScore, and riskCategory.
+2.	JDBC Setup: Sets up a JDBC connection to the database.
+3.	SQL Query Execution: Uses a Statement to execute the SQL query.
+4.	ResultSet Processing: Iterates through the result set, extracts relevant fields, creates RiskAssessment objects, and stores them in a list.
+5.	Output: Prints each RiskAssessment object, displaying the holder’s ID, name, risk score, and risk category.
+Assumptions:
+•	The PolicyHolder table exists in the database with columns (holderId, name, age, policyType, premiumAmount).
+•	The database is MySQL, but the SQL syntax can be adjusted if needed.
+•	JDBC setup is configured with correct credentials and database URL.
+Problem 6
+Explanation of SQL Query:
+•	WHERE: Filters for transactions where isFraudulent is true and amount is greater than $10,000.
+•	GROUP BY: Groups transactions by policyNumber.
+•	COUNT: Calculates the total number of fraudulent transactions for each policy.
+•	SUM: Calculates the total fraudulent amount for each policy.
+•	HAVING: Filters groups to identify policies with either more than 5 fraudulent transactions or a total fraud amount exceeding $50,000.
+Explanation of Java Code:
+1.	JDBC Setup: Sets up a connection to the database with JDBC URL, username, and password.
+2.	SQL Query Execution: Uses a Statement object to execute the SQL query.
+3.	ResultSet Processing: Iterates through the result set, which contains records for policies with fraudulent activity meeting the alert criteria.
+4.	Alert Generation: Prints an alert for each policy number, displaying the policy number, fraud transaction count, and total fraud amount if the policy meets the threshold.
+Assumptions:
+•	The Transactions table exists in the database with fields (transactionId, policyNumber, amount, transactionDate, isFraudulent).
+•	The database is MySQL; modify syntax slightly if another RDBMS is used.
+•	JDBC is configured correctly with the necessary credentials.
+
+7
+Explanation of SQL Query
+•	WHERE: Filters for policies with a status of "Active" and an expiryDate between the current date and the next 30 days.
+•	DATEDIFF: Calculates the number of days between expiryDate and the current date as remainingDays.
+•	ORDER BY: Sorts the policies by remainingDays in ascending order.
+Explanation of Java Code
+1.	RenewalReminder Class: This class represents a renewal reminder with fields for policyId, policyHolderId, and remainingDays.
+2.	JDBC Setup: Connects to the database using JDBC.
+3.	SQL Query Execution: Executes the SQL query using a Statement and stores the result in a ResultSet.
+4.	ResultSet Processing and Grouping: For each record, a RenewalReminder object is created and grouped by policyHolderId using a HashMap. The computeIfAbsent method ensures that a list is created for each policyHolderId if it doesn’t already exist.
+5.	Output: Prints the grouped reminders, listing each policyHolderId with their associated RenewalReminder entries sorted by remainingDays.
+Assumptions
+•	The Policy table exists with the necessary columns (policyId, policyHolderId, expiryDate, premiumAmount, status).
+•	The database is MySQL (syntax adjustments may be required for other databases).
+•	You have the correct JDBC setup with valid credentials.
+This approach provides an efficient way to filter, sort, and group renewal reminders for active policies due within the next 30 days. Let me know if you need further clarification or additional functionality!
+
+8
+Explanation of SQL Query
+•	WHERE: Filters for transactions that occurred within the last 12 months.
+•	SUM: Calculates the total transaction amount for each customer.
+•	AVG: Calculates the average transaction amount for each customer.
+•	GROUP BY: Groups results by customerId to perform aggregation for each customer.
+•	ORDER BY: Sorts the results by totalTransactionAmount in descending order.
+•	LIMIT: Limits the result to the top 10 customers based on the totalTransactionAmount.
+Explanation of Java Code
+1.	CustomerLifetimeValue Class: A class representing a customer’s lifetime value with fields for customerId, totalTransactionAmount, and averageTransactionAmount.
+2.	JDBC Setup: Connects to the database using JDBC.
+3.	SQL Query Execution: Executes the SQL query using a Statement object and processes the result set.
+4.	ResultSet Processing: Creates CustomerLifetimeValue objects for each record in the result set and adds them to a list.
+5.	Output: Prints each CustomerLifetimeValue object, displaying the customer ID, total transaction amount, and average transaction amount.
+Assumptions
+•	The CustomerTransaction table exists with columns (customerId, transactionDate, transactionAmount).
+•	The database is MySQL; modify syntax as needed for other RDBMS.
+•	JDBC setup is configured correctly with the correct credentials.
+This approach will help calculate and retrieve the top 10 customers with the highest total transaction amounts within the past year. Let me know if there’s anything specific you need or if you'd like
+
+
+9
+Explanation of SQL Query
+•	JOIN: Joins Transaction and Policy tables on policyId.
+•	WHERE: Filters transactions that have occurred in the last 6 months with amounts greater than $10,000.
+•	GROUP BY: Groups results by policyId and policyHolderId.
+•	COUNT: Counts the number of qualifying transactions for each policy.
+•	SUM: Calculates the total high-value transaction amount for each policy.
+•	HAVING: Flags policies that have more than 3 such transactions and a total high-value amount exceeding $50,000.
+Explanation of Java Code
+1.	FraudAlert Class: Represents a flagged policy with fields for policyId, policyHolderId, highValueTransactionCount, and totalHighValueAmount.
+2.	JDBC Setup: Connects to the database using JDBC.
+3.	SQL Query Execution: Executes the SQL query using a Statement object and processes the result set.
+4.	ResultSet Processing: Creates FraudAlert objects for each record in the result set and adds them to a list.
+5.	Output: Prints each FraudAlert object, displaying the flagged policies that meet the criteria for potential fraud.
+Assumptions
+•	The Policy and Transaction tables exist with columns (policyId, policyHolderId, transactionId, transactionDate, amount).
+•	The database is MySQL; syntax may need adjustments for other RDBMS.
+•	JDBC setup is configured correctly with the correct credentials.
